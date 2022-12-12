@@ -1,3 +1,4 @@
+import java.awt.Color;
 /*
 This class defines all dependent attributes of a desired shape; Oval
 */
@@ -5,13 +6,13 @@ public class Oval extends FillableShape{
     public static int ovalCount = 0;
     
     // Parameterized constructor method
-    public Oval(int initx1,int inity1,int initx2,int inity2, boolean initFilled){
-        super (initx1,inity1,initx2,inity2,initFilled);
+    public Oval(int initx1, int inity1, int initx2, int inity2, Color initColor, boolean initFilled){
+        super(initx1,inity1,initx2,inity2, initColor, initFilled);
         ovalCount++;
     }
     // No-argument constructor method
     public Oval(){
-        this(0, 0, 0, 0, false);
+        this(0,0,0, 0, Color.BLACK, false);
     }
     
     // Accessor for ovalCount instance variable
