@@ -82,4 +82,6 @@ public abstract class Shape {
     public void setColor(Color newColor) {
         color = newColor;
     }
+
+    public abstract void draw(Graphics g);
 }

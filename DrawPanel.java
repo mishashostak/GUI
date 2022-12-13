@@ -1,12 +1,10 @@
-import java.awt.Color;
-import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.Random;
+import java.awt.*;
+import java.util.*;
 import javax.swing.JPanel;
  
 public class DrawPanel extends JPanel {
     // We'll use a shared array to store 10 Line objects
-    private ArrayList<String> shapes = new ArrayList<String>(10);
+    private ArrayList<Shape> shapes = new ArrayList<Shape>();
     
     // Constructor instantiates an array of 10 Random Line objects
     public DrawPanel() {
@@ -15,29 +13,26 @@ public class DrawPanel extends JPanel {
         setBackground( Color.WHITE );
         
         // Create 10 Line objects with random coordinates and colours
-        for ( int count = 0; count < shapes.size(); count++ ) {
+        for ( int i = 0; i < 10; i++ ) {
             // generate random coordinates
             int x1 = rand.nextInt( 300 );
             int y1 = rand.nextInt( 300 );
             int x2 = rand.nextInt( 300 );
             int y2 = rand.nextInt( 300 );
-            int randShapes = randomNumber.nextInt(3);
             int filled = rand.nextInt(2);
-            
             // generate a random color
-            Color color = new Color( rand.nextInt( 256 ), 
-                                    rand.nextInt( 256 ), rand.nextInt( 256 ) );
-            
+            Color color = new Color( rand.nextInt( 256 ), rand.nextInt( 256 ), rand.nextInt( 256 ) );
+
             // add the line to the array of lines to be displayed
-            switch(randShapes) {
+            switch(rand.nextInt(3)) {
                 case 0:
-                    lines[ count ] = new Line( x1, y1, x2, y2, color );
+                    shapes.add(new Line( x1, y1, x2, y2, color ));
                     break;
                 case 1:
-                    lines[ count ] = new Oval( x1, y1, x2, y2, color, (filled == 1 ? true : false) );
+                    shapes.add(new Oval( x1, y1, x2, y2, color, (filled == 1) ));
                     break;
                 case 2:
-                    lines[ count ] = new Rectangle( x1, y1, x2, y2, color, (filled == 1 ? true : false) );
+                    shapes.add(new Rectangle( x1, y1, x2, y2, color, (filled == 1) ));
                     break;
             }
         } 
@@ -49,7 +44,7 @@ public class DrawPanel extends JPanel {
         super.paintComponent( g );
         
         // Call the draw() method for each Line object in the array
-        for ( Object shape : shapes )
+        for ( Shape shape : shapes )
             shape.draw( g );
     } 
 } 

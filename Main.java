@@ -1,3 +1,6 @@
+import java.awt.Dimension;
+import javax.swing.JFrame;
+
 /*
 Author: Misha Shostak; ICS4U1
 GUI
@@ -6,7 +9,18 @@ Standard Main class **(Currently being utilised exclusively for Debugging)**
 public class Main {
     public static void main(String[] args) {
         System.out.printf("%n");
-         
+
+        JFrame randImg = new JFrame( "random" );
+        
+        DrawPanel panel = new DrawPanel();
+        randImg.add( panel );
+        
+        randImg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        randImg.setPreferredSize(new Dimension(600, 600));
+        randImg.setLocationRelativeTo(null);
+        randImg.pack();
+        randImg.setVisible(true); 
+        /* 
         Rectangle r = new Rectangle();
         r.setX1(4);
         r.setY1(4);
@@ -22,7 +36,7 @@ public class Main {
         System.out.printf("%nrect area: %f", r.calcArea());
         System.out.printf("%nrect1 is square?: %b%n", r.isSquare());
 
-        Rectangle r1 = new Rectangle(70,70,190,190,true);
+        Rectangle r1 = new Rectangle(70,70,190,190,null, true);
         System.out.printf("%n%s", r1.toString());
         System.out.printf("%nrect1 count: %d", Rectangle.getRectCount());
         System.out.printf("%nrect1 upper left x: %d", r1.getTopLeftX());
@@ -48,7 +62,7 @@ public class Main {
         System.out.printf("%noval area: %f", o.calcArea());
         System.out.printf("%noval is circle?: %b%n", o.isCircle());
 
-        Oval o1 = new Oval(300,300,400,450,false);
+        Oval o1 = new Oval(300,300,400,450,null, false);
         System.out.printf("%n%s", o1.toString());
         System.out.printf("%noval count: %d", Oval.getOvalCount());
         System.out.printf("%noval upper left x: %d", o1.getTopLeftX());
@@ -59,5 +73,6 @@ public class Main {
         System.out.printf("%noval is circle?: %b", o1.isCircle());
         System.out.printf("%noval is overlapping?: %b%n%n", o1.isOverlapping(o, o1));
 
+        */
     }
 }

@@ -31,4 +31,11 @@ public class Rectangle extends FillableShape{
     public double calcArea() {
         return getWidth()*getHeight();
     }
+
+    public void draw( Graphics g ) {
+        g.setColor(getColor());
+        if(getFilled()) g.fillRect(getX1(), getX2(), getY1(), getY2());
+
+        else g.drawRect(getX1(), getX2(), getY1(), getY2());
+    } 
 }

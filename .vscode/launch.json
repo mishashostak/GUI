@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "GUI_dc08f8b1"
+        },
+        {
+            "type": "java",
             "name": "Launch FourOneN3",
             "request": "launch",
             "mainClass": "FourOneN3",

@@ -1,4 +1,4 @@
-import java.awt.Color;
+import java.awt.*;
 /*
 This class defines all dependent attributes of a desired shape; Oval
 */
@@ -35,4 +35,11 @@ public class Oval extends FillableShape{
             return Math.PI * (getWidth()/2) * (getHeight()/2);
         }
     }
+
+    public void draw( Graphics g ) {
+        g.setColor(getColor());
+        if(getFilled()) g.fillOval(getX1(), getX2(), getY1(), getY2());
+        
+        else g.drawOval(getX1(), getX2(), getY1(), getY2());
+    } 
 }
