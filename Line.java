@@ -6,6 +6,10 @@ public class Line extends Shape{
         super(initx1, inity1, initx2, inity2, initColor);
     }
     
+    
+    /** 
+     * @param g
+     */
     public void draw( Graphics g ) {
         g.setColor( getColor() );
         g.drawLine( getX1(), getY1(), getX2(), getY2() );

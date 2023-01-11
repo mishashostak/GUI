@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch SwingPaint",
+            "request": "launch",
+            "mainClass": "SwingPaint",
+            "projectName": "GUI-1_fdad9615"
+        },
+        {
+            "type": "java",
             "name": "Launch Main",
             "request": "launch",
             "mainClass": "Main",

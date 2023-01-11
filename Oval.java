@@ -15,16 +15,28 @@ public class Oval extends FillableShape{
         this(0,0,0, 0, Color.BLACK, false);
     }
     
+    
+    /** 
+     * @return int
+     */
     // Accessor for ovalCount instance variable
     public static int getOvalCount() {
         return ovalCount;
     }   
 
+    
+    /** 
+     * @return boolean
+     */
     //Method to return the boolean value of ovular subset: circle
     public boolean isCircle() {
         return (getWidth() == getHeight());
     }
 
+    
+    /** 
+     * @return double
+     */
     //Returns the calculated Area of the Oval/Circle
     @Override
     public double calcArea() {
@@ -36,6 +48,10 @@ public class Oval extends FillableShape{
         }
     }
 
+    
+    /** 
+     * @param g
+     */
     public void draw( Graphics g ) {
         g.setColor(getColor());
         if(getFilled()) g.fillOval(getX1(), getX2(), getY1(), getY2());

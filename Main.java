@@ -1,12 +1,16 @@
 import java.awt.Dimension;
 import javax.swing.JFrame;
 
-/*
-Author: Misha Shostak; ICS4U1
-GUI
-Standard Main class **(Currently being utilised exclusively for Debugging)**
-*/
+/**
+ * Author: Misha Shostak; ICS4U1
+ * GUI
+ * Standard Main class **(utilised exclusively for Debugging)**
+ */
 public class Main {
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
         System.out.printf("%n");
 

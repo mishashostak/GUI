@@ -38,6 +38,10 @@ public class DrawPanel extends JPanel {
         } 
     } 
     
+    
+    /** 
+     * @param g
+     */
     // This method is called automatically by the JVM when the window needs to be (re)drawn.
     @Override
     public void paintComponent( Graphics g ) {

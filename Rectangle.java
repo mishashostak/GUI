@@ -16,22 +16,38 @@ public class Rectangle extends FillableShape{
         this(0,0,0, 0, Color.BLACK, false);
     }
 
+    
+    /** 
+     * @return int
+     */
     // Accessor for rectCount instance variable
     public static int getRectCount() {
         return rectCount;
     }
     
+    
+    /** 
+     * @return boolean
+     */
     //Method to return the boolean value of rectangular subset: square
     public boolean isSquare() {
         return (getWidth() == getHeight());
     }
     
+    
+    /** 
+     * @return double
+     */
     //Returns the calculated Area of the Oval/Circle
     @Override
     public double calcArea() {
         return getWidth()*getHeight();
     }
 
+    
+    /** 
+     * @param g
+     */
     public void draw( Graphics g ) {
         g.setColor(getColor());
         if(getFilled()) g.fillRect(getX1(), getX2(), getY1(), getY2());
