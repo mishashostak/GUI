@@ -31,7 +31,6 @@ public class Canvas extends JComponent {
 	private final SizedStack<Image> undoStack = new SizedStack<>(12);
 	private final SizedStack<Image> redoStack = new SizedStack<>(12);
 	private Rectangle shape;
-	private Point startPoint;
 	private MouseMotionListener motion;
 	private MouseListener listener;
 

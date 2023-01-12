@@ -14,12 +14,12 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
-public class InputWH {
+public class DrawInit {
 	public int width;
 	public int height;
 	Colouring draw = new Colouring();
 
-	InputWH() {
+	DrawInit() {
 		showInput();
 	}
 

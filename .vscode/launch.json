@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Driver",
+            "request": "launch",
+            "mainClass": "Driver",
+            "projectName": "GUI-1_fdad9615"
+        },
+        {
+            "type": "java",
+            "name": "Launch InputWH",
+            "request": "launch",
+            "mainClass": "InputWH",
+            "projectName": "GUI-1_fdad9615"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "GUI-1_fdad9615"
+        },
+        {
+            "type": "java",
             "name": "Launch SwingPaint",
             "request": "launch",
             "mainClass": "SwingPaint",

@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.Box;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
@@ -23,9 +22,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class Draw {
+public class Colouring {
 
 	Canvas canvas;
+	ImageControl imgC = new ImageControl();
 	Color color = Color.WHITE;
 	JButton clearButton, blackButton, blueButton, greenButton, redButton,
 			colorPicker, magentaButton, grayButton, orangeButton, yellowButton,
@@ -33,12 +33,6 @@ public class Draw {
 			saveAsButton, rectangle, pencil, undoButton, redoButton;
 	private JFileChooser fileChooser;
 	private File file;
-	private Icon save = new ImageIcon(getClass().getResource("save.png"));
-	private Icon undo = new ImageIcon(getClass().getResource("undo.png"));
-	private Icon redo = new ImageIcon(getClass().getResource("redo.png"));
-	private Icon pencilIcon = new ImageIcon(getClass()
-			.getResource("pencil.png"));
-	private Icon rect = new ImageIcon(getClass().getResource("rect.png"));
 	private int saveCounter = 0;
 	private JLabel filenameBar, thicknessStat;
 	private JSlider thicknessSlider;
@@ -144,7 +138,7 @@ public class Draw {
 	            break;
 	        }
 	    }
-		JFrame frame = new JFrame("Paint ("+ width +"X" + height +")");
+		JFrame frame = new JFrame("Colouring");
 		Container container = frame.getContentPane();
 		container.setLayout(new BorderLayout());
 		canvas = new Canvas();
@@ -158,10 +152,10 @@ public class Draw {
 
 		panel1.setLayout(new FlowLayout());
 
-		pencil = new JButton(pencilIcon);
+		pencil = new JButton(new ImageIcon(imgC.binImgs[0]));
 		pencil.setPreferredSize(new Dimension(40, 40));
 		pencil.addActionListener(listener);
-		rectangle = new JButton(rect);
+		rectangle = new JButton(new ImageIcon(imgC.binImgs[1]));
 		rectangle.setPreferredSize(new Dimension(40, 40));
 		rectangle.addActionListener(listener);
 		thicknessSlider = new JSlider(JSlider.HORIZONTAL, 0, 50, 1);
@@ -169,10 +163,10 @@ public class Draw {
 		thicknessSlider.setPaintTicks(true);
 		thicknessSlider.setPreferredSize(new Dimension(40, 40));
 		thicknessSlider.addChangeListener(thick);
-		undoButton = new JButton(undo);
+		undoButton = new JButton(new ImageIcon(imgC.binImgs[4]));
 		undoButton.setPreferredSize(new Dimension(20, 20));
 		undoButton.addActionListener(listener);
-		redoButton = new JButton(redo);
+		redoButton = new JButton(new ImageIcon(imgC.binImgs[2]));
 		redoButton.setPreferredSize(new Dimension(20, 20));
 		redoButton.addActionListener(listener);
 		blackButton = new JButton();
@@ -219,7 +213,7 @@ public class Draw {
 		lightGrayButton.setBackground(Color.LIGHT_GRAY);
 		lightGrayButton.setPreferredSize(new Dimension(40, 40));
 		lightGrayButton.addActionListener(listener);
-		saveButton = new JButton(save);
+		saveButton = new JButton(new ImageIcon(imgC.binImgs[3]));
 		saveButton.addActionListener(listener);
 		saveAsButton = new JButton("Save As");
 		saveAsButton.addActionListener(listener);

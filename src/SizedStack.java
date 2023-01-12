@@ -15,10 +15,10 @@ public class SizedStack<T> extends Stack<T> {
 	 * @return Object
 	 */
 	@Override
-	public Object push(Object object) {
+	public T push(T object) {
 		while (this.size() > maxSize) {
 			this.remove(0);
 		}
-		return super.push((T) object);
+		return super.push(object);
 	}
 }
