@@ -1,3 +1,4 @@
+package shape;
 import java.awt.*;
 
 public class Line extends Shape{

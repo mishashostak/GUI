@@ -1,3 +1,4 @@
+package shape;
 import java.awt.*;
 /*
 This class defines all dependent attributes of a desired shape; Oval
