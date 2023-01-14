@@ -1,3 +1,6 @@
+import java.io.File;
+
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 public class Driver {
@@ -11,9 +14,16 @@ public class Driver {
                 "", JOptionPane.DEFAULT_OPTION,
                     JOptionPane.QUESTION_MESSAGE, null, bs, null);
         if (reply == 0) {
-            return;
-        } else {
-            return;
+            JFileChooser fileChooser= new JFileChooser();
+            fileChooser.setCurrentDirectory(null);
+            int response = fileChooser.showSaveDialog(null);
+
+            if(response == JFileChooser.APPROVE_OPTION) {
+                File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+                new ImageControl(file);
+            }
+        } else if (reply == 1) {
+            new InputWH();
         }
 	}
 }

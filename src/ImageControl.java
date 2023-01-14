@@ -7,7 +7,7 @@ import javax.imageio.ImageIO;
 public class ImageControl {
     public BufferedImage[] binImgs;
 
-    ImageControl(){
+    public ImageControl(){
         File path = new File("bin");
         File[] binArr = path.listFiles();
         binImgs = new BufferedImage[path.listFiles().length];
@@ -17,5 +17,9 @@ public class ImageControl {
             } catch (IOException e) {
             }
         }
+    }
+
+    public ImageControl(File file) {
+        //DIFFICULT AI BIT
     }
 }

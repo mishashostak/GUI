@@ -13,12 +13,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.event.MouseInputAdapter;
 
@@ -38,25 +34,8 @@ public class MonoCanvas extends JComponent {
 	/** 
 	 * @param file
 	 */
-	public void save(File file) {
-		try {
-			ImageIO.write((RenderedImage) img, "PNG", file);
-		} catch (IOException ex) {
-		}
-	}
-
-	
-	/** 
-	 * @param file
-	 */
-	public void load(File file) {
-		try {
-			img = ImageIO.read(file);
-			g = (Graphics2D) img.getGraphics();
-		}
-
-		catch (IOException ex) {
-		}
+	public void save() {
+		new Canvas(img);
 	}
 
 	
@@ -126,57 +105,6 @@ public class MonoCanvas extends JComponent {
 		repaint();
 	}
 
-	public void red() {
-		g.setPaint(Color.red);
-	}
-
-	public void black() {
-		g.setPaint(Color.black);
-	}
-
-	public void magenta() {
-		g.setPaint(Color.magenta);
-	}
-
-	public void green() {
-		g.setPaint(Color.green);
-	}
-
-	public void blue() {
-		g.setPaint(Color.blue);
-	}
-
-	public void gray() {
-		g.setPaint(Color.GRAY);
-	}
-
-	public void orange() {
-		g.setPaint(Color.ORANGE);
-	}
-
-	public void yellow() {
-		g.setPaint(Color.YELLOW);
-	}
-
-	public void pink() {
-		g.setPaint(Color.PINK);
-	}
-
-	public void cyan() {
-		g.setPaint(Color.CYAN);
-	}
-
-	public void lightGray() {
-		g.setPaint(Color.lightGray);
-	}
-
-	
-	/** 
-	 * @param color
-	 */
-	public void picker(Color color) {
-		g.setPaint(color);
-	}
 
 	public void clear() {
 		if (background != null) {

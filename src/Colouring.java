@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -25,10 +26,11 @@ import javax.swing.event.ChangeListener;
 
 public class Colouring {
 
-	Canvas canvas;
-	ImageControl imgC = new ImageControl();
-	Color color = Color.WHITE;
-	JButton clearButton, blackButton, blueButton, greenButton, redButton,
+	private JComboBox<JButton> colBu;
+	private Canvas canvas;
+	private ImageControl imgC = new ImageControl();
+	private Color color = Color.WHITE;
+	private JButton clearButton, blueButton, greenButton, redButton,
 			colorPicker, magentaButton, grayButton, orangeButton, yellowButton,
 			pinkButton, cyanButton, lightGrayButton, saveButton, loadButton,
 			saveAsButton, rectangle, pencil, undoButton, redoButton;
@@ -38,7 +40,7 @@ public class Colouring {
 	private JLabel filenameBar, thicknessStat;
 	private JSlider thicknessSlider;
 	private int width, height;
-	ChangeListener thick = new ChangeListener() {
+	private ChangeListener thick = new ChangeListener() {
 		public void stateChanged(ChangeEvent e) {
 			thicknessStat.setText(String.format("%s",
 					thicknessSlider.getValue()));
@@ -50,8 +52,6 @@ public class Colouring {
 		public void actionPerformed(ActionEvent event) {
 			if (event.getSource() == clearButton) {
 				canvas.clear();
-			} else if (event.getSource() == blackButton) {
-				canvas.black();
 			} else if (event.getSource() == blueButton) {
 				canvas.blue();
 			} else if (event.getSource() == greenButton) {
@@ -126,7 +126,8 @@ public class Colouring {
 		this.width = width;
 		this.height = height;
 	}
-	public void openPaint() {
+
+	public void openPaint(Image img) {
 		for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 	        if ("Nimbus".equals(info.getName())) {
 	            try {
@@ -142,7 +143,7 @@ public class Colouring {
 		JFrame frame = new JFrame("Colouring");
 		Container container = frame.getContentPane();
 		container.setLayout(new BorderLayout());
-		canvas = new Canvas();
+		canvas = new Canvas(img);
 
 		container.add(canvas, BorderLayout.CENTER);
 
@@ -170,10 +171,6 @@ public class Colouring {
 		redoButton = new JButton(new ImageIcon(imgC.binImgs[2]));
 		redoButton.setPreferredSize(new Dimension(20, 20));
 		redoButton.addActionListener(listener);
-		blackButton = new JButton();
-		blackButton.setBackground(Color.BLACK);
-		blackButton.setPreferredSize(new Dimension(40, 40));
-		blackButton.addActionListener(listener);
 		blueButton = new JButton();
 		blueButton.setBackground(Color.BLUE);
 		blueButton.setPreferredSize(new Dimension(40, 40));
@@ -241,18 +238,14 @@ public class Colouring {
 		box.add(pencil, BorderLayout.NORTH);
 		box.add(Box.createVerticalStrut(5));
 		box.add(rectangle, BorderLayout.NORTH);*/
+		JButton[] bArr = new JButton[]{blueButton, greenButton, redButton,
+			magentaButton, grayButton, orangeButton, yellowButton,
+			pinkButton, cyanButton, lightGrayButton};
 
-		panel.add(greenButton);
-		panel.add(blueButton);
-		panel.add(blackButton);
-		panel.add(redButton);
-		panel.add(magentaButton);
-		panel.add(grayButton);
-		panel.add(orangeButton);
-		panel.add(yellowButton);
-		panel.add(pinkButton);
-		panel.add(cyanButton);
-		panel.add(lightGrayButton);
+		colBu = new JComboBox<>(bArr);
+
+
+		panel.add(colBu);
 		panel.add(saveButton);
 		panel.add(saveAsButton);
 		panel.add(loadButton);
@@ -269,5 +262,4 @@ public class Colouring {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
-
 }

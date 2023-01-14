@@ -81,8 +81,8 @@ public class Canvas extends JComponent {
 		}
 	}
 
-	public Canvas() {
-		setBackground(Color.WHITE);
+	public Canvas(Image img) {
+		setBackground(img);
 		defaultListener();
 	}
 
