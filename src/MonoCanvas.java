@@ -35,9 +35,7 @@ public class MonoCanvas extends JComponent {
 	 * @param file
 	 */
 	public void save() {
-		Colouring draw = new Colouring();
-		draw.setWH(InputWH.width, InputWH.height);
-		draw.openPaint(img);
+		new Colouring(copyImage(img),getSize().width, getSize().height);
 	}
 
 	

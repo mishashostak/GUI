@@ -21,8 +21,7 @@ public class ImageControl {
 
     public ImageControl(File file) {
         BufferedImage oImg = OutlineImage(file);
-        Colouring draw = new Colouring();
-        draw.setWH(oImg.getWidth(), oImg.getHeight());
+        new Colouring(oImg, oImg.getWidth(), oImg.getHeight());
     }
 
     public BufferedImage OutlineImage(File file) {

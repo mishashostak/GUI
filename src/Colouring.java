@@ -3,7 +3,9 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -24,17 +26,15 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import shape.Rectangle;
-
 public class Colouring {
 
-	private JComboBox<Rectangle> colBu;
+	private JComboBox<ImageIcon> colBu;
 	private Canvas canvas;
 	private ImageControl imgC = new ImageControl();
 	private Color color = Color.WHITE;
 	private JButton clearButton, saveButton, loadButton,
 		saveAsButton, rectangle, pencil, undoButton, redoButton;
-	private Rectangle blueButton, greenButton, redButton,
+	private BufferedImage blueButton, greenButton, redButton,
 		magentaButton, grayButton, orangeButton, yellowButton,
 			pinkButton, cyanButton, lightGrayButton, colorPicker;
 	private JFileChooser fileChooser;
@@ -83,6 +83,12 @@ public class Colouring {
 				canvas.rect();
 			} else if (event.getSource() == pencil) {
 				canvas.pencil();
+			} else if (event.getSource() == colorPicker) {
+				color = JColorChooser.showDialog(null, "Pick your color!",
+						color);
+				if (color == null)
+					color = (Color.WHITE);
+				canvas.picker(color);
 			} else if (event.getSource() == saveButton) {
 				if (saveCounter == 0) {
 					fileChooser = new JFileChooser();
@@ -111,15 +117,15 @@ public class Colouring {
 					filenameBar.setText(file.toString());
 					canvas.load(file);
 				}
-			} else if (event.getSource() == colorPicker) {
-				color = JColorChooser.showDialog(null, "Pick your color!",
-						color);
-				if (color == null)
-					color = (Color.WHITE);
-				canvas.picker(color);
 			}
 		}
 	};
+
+	public Colouring(BufferedImage img, int width, int height) {
+		setWH(width, height);
+		canvas = new Canvas(img, width, height);
+		openPaint();
+	}
 	
 	/** 
 	 * @param width
@@ -130,7 +136,7 @@ public class Colouring {
 		this.height = height;
 	}
 
-	public void openPaint(Image img) {
+	public void openPaint() {
 		for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 	        if ("Nimbus".equals(info.getName())) {
 	            try {
@@ -146,7 +152,6 @@ public class Colouring {
 		JFrame frame = new JFrame("Colouring");
 		Container container = frame.getContentPane();
 		container.setLayout(new BorderLayout());
-		canvas = new Canvas(img);
 
 		container.add(canvas, BorderLayout.CENTER);
 
@@ -175,17 +180,61 @@ public class Colouring {
 		redoButton.setPreferredSize(new Dimension(20, 20));
 		redoButton.addActionListener(listener);
 
-		blueButton = new Rectangle(0,0,40,40,Color.BLUE,true);
-		greenButton = new Rectangle(0,0,40,40,Color.GREEN,true);
-		redButton = new Rectangle(0,0,40,40,Color.RED,true);
-		magentaButton = new Rectangle(0,0,40,40,Color.MAGENTA,true);
-		grayButton = new Rectangle(0,0,40,40,Color.GRAY,true);
-		orangeButton = new Rectangle(0,0,40,40,Color.ORANGE,true);
-		yellowButton = new Rectangle(0,0,40,40,Color.YELLOW,true);
-		pinkButton = new Rectangle(0,0,40,40,Color.PINK,true);
-		cyanButton = new Rectangle(0,0,40,40,Color.CYAN,true);
-		lightGrayButton = new Rectangle(0,0,40,40,Color.LIGHT_GRAY,true);
-		Rectangle cpPre = new Rectangle(0,0,40,40,new ImageIcon(imgC.binImgs[5]);
+		blueButton = new BufferedImage(40,40,BufferedImage.TYPE_INT_RGB);
+		Graphics2D gBlue = blueButton.createGraphics();
+        gBlue.setColor(Color.BLUE);
+        gBlue.fillRect(0,0,40,40);
+        gBlue.dispose();
+		greenButton = new BufferedImage(40,40,BufferedImage.TYPE_INT_RGB);
+		Graphics2D gGreen = greenButton.createGraphics();
+        gGreen.setColor(Color.GREEN);
+        gGreen.fillRect(0,0,40,40);
+        gGreen.dispose();
+		redButton = new BufferedImage(40,40,BufferedImage.TYPE_INT_RGB);
+		Graphics2D gRed = redButton.createGraphics();
+        gRed.setColor(Color.RED);
+        gRed.fillRect(0,0,40,40);
+        gRed.dispose();
+		magentaButton = new BufferedImage(40,40,BufferedImage.TYPE_INT_RGB);
+		Graphics2D gMag = magentaButton.createGraphics();
+        gMag.setColor(Color.MAGENTA);
+        gMag.fillRect(0,0,40,40);
+        gMag.dispose();
+		grayButton = new BufferedImage(40,40,BufferedImage.TYPE_INT_RGB);
+		Graphics2D gGray = grayButton.createGraphics();
+        gGray.setColor(Color.GRAY);
+        gGray.fillRect(0,0,40,40);
+        gGray.dispose();
+		orangeButton = new BufferedImage(40,40,BufferedImage.TYPE_INT_RGB);
+		Graphics2D gOrng = orangeButton.createGraphics();
+        gOrng.setColor(Color.ORANGE);
+        gOrng.fillRect(0,0,40,40);
+        gOrng.dispose();
+		yellowButton = new BufferedImage(40,40,BufferedImage.TYPE_INT_RGB);
+		Graphics2D gYel = yellowButton.createGraphics();
+        gYel.setColor(Color.YELLOW);
+        gYel.fillRect(0,0,40,40);
+        gYel.dispose();
+		pinkButton = new BufferedImage(40,40,BufferedImage.TYPE_INT_RGB);
+		Graphics2D gPink = pinkButton.createGraphics();
+        gPink.setColor(Color.PINK);
+        gPink.fillRect(0,0,40,40);
+        gPink.dispose();
+		cyanButton = new BufferedImage(40,40,BufferedImage.TYPE_INT_RGB);
+		Graphics2D gCyan = cyanButton.createGraphics();
+        gCyan.setColor(Color.CYAN);
+        gCyan.fillRect(0,0,40,40);
+        gCyan.dispose();
+		lightGrayButton = new BufferedImage(40,40,BufferedImage.TYPE_INT_RGB);
+		Graphics2D gLG = lightGrayButton.createGraphics();
+        gLG.setColor(Color.LIGHT_GRAY);
+        gLG.fillRect(0,0,40,40);
+        gLG.dispose();
+		colorPicker = new BufferedImage(40,40,BufferedImage.TYPE_INT_RGB);
+		Graphics2D gColPick = colorPicker.createGraphics();
+        gColPick.drawImage((Image)imgC.binImgs[5],0,0,40,40,null);
+        gColPick.dispose();
+
 
 		saveButton = new JButton(new ImageIcon(imgC.binImgs[3]));
 		saveButton.addActionListener(listener);
@@ -212,11 +261,11 @@ public class Colouring {
 		box.add(pencil, BorderLayout.NORTH);
 		box.add(Box.createVerticalStrut(5));
 		box.add(rectangle, BorderLayout.NORTH);*/
-		Rectangle[] bArr = new Rectangle[]{blueButton, greenButton, redButton,
-			magentaButton, grayButton, orangeButton, yellowButton,
-			pinkButton, cyanButton, lightGrayButton, colorPicker};
+		ImageIcon[] bArr = new ImageIcon[]{new ImageIcon(blueButton), new ImageIcon(greenButton), new ImageIcon(redButton),
+			new ImageIcon(magentaButton), new ImageIcon(grayButton), new ImageIcon(orangeButton), new ImageIcon(yellowButton),
+			new ImageIcon(pinkButton), new ImageIcon(cyanButton), new ImageIcon(lightGrayButton), new ImageIcon(colorPicker)};
 
-		colBu = new JComboBox<Rectangle>(bArr);
+		colBu = new JComboBox<ImageIcon>(bArr);
 
 
 		panel.add(colBu);

@@ -26,7 +26,7 @@ import javax.swing.event.MouseInputAdapter;
 public class Canvas extends JComponent {
 	private int X1, Y1, X2, Y2;
 	private Graphics2D g;
-	private Image img, background, undoTemp, redoTemp;
+	private BufferedImage img, background, undoTemp, redoTemp;
 	ArrayList<Shape> shapes = new ArrayList<Shape>();
 	private final SizedStack<Image> undoStack = new SizedStack<>(12);
 	private final SizedStack<Image> redoStack = new SizedStack<>(12);
@@ -65,7 +65,7 @@ public class Canvas extends JComponent {
 	 */
 	protected void paintComponent(Graphics g1) {
 		if (img == null) {
-			img = createImage(getSize().width, getSize().height);
+			img = (BufferedImage) createImage(getSize().width, getSize().height);
 			g = (Graphics2D) img.getGraphics();
 			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 					RenderingHints.VALUE_ANTIALIAS_ON);
@@ -81,7 +81,8 @@ public class Canvas extends JComponent {
 		}
 	}
 
-	public Canvas(Image img) {
+	public Canvas(BufferedImage img, int width, int height) {
+		setSize(width,height);
 		setBackground(img);
 		defaultListener();
 	}
@@ -191,7 +192,7 @@ public class Canvas extends JComponent {
 
 	public void undo() {
 		if (undoStack.size() > 0) {
-			undoTemp = undoStack.pop();
+			undoTemp = (BufferedImage) undoStack.pop();
 			redoStack.push(img);
 			setImage(undoTemp);
 		}
@@ -199,7 +200,7 @@ public class Canvas extends JComponent {
 
 	public void redo() {
 		if (redoStack.size() > 0) {
-			redoTemp = redoStack.pop();
+			redoTemp = (BufferedImage) redoStack.pop();
 			undoStack.push(img);
 			setImage(redoTemp);
 		}
@@ -224,22 +225,36 @@ public class Canvas extends JComponent {
 	/** 
 	 * @param img
 	 */
-	private void setImage(Image img) {
-		g = (Graphics2D) img.getGraphics();
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
-		g.setPaint(Color.black);
-		this.img = img;
-		repaint();
+	private void setImage(BufferedImage image) {
+		if (image == null) {
+			try {
+				image = (BufferedImage) createImage(getSize().width, getSize().height);
+				image.createGraphics();
+				g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+						RenderingHints.VALUE_ANTIALIAS_ON);
+				clear();
+				img = image;
+			} catch(NullPointerException e) {
+				e.printStackTrace();
+			}
+		} 
+		else {
+			g = (Graphics2D) image.getGraphics();
+			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
+			g.setPaint(Color.black);
+			img = image;
+			repaint();
+		}
 	}
 
 	
 	/** 
 	 * @param img
 	 */
-	public void setBackground(Image img) {
+	public void setBackground(BufferedImage img) {
 		background = copyImage(img);
-		setImage(copyImage(img));
+		setImage(null);
 	}
 
 	
@@ -247,7 +262,7 @@ public class Canvas extends JComponent {
 	 * @param img
 	 * @return BufferedImage
 	 */
-	private BufferedImage copyImage(Image img) {
+	private BufferedImage copyImage(BufferedImage img) {
 		BufferedImage copyOfImage = new BufferedImage(getSize().width,
 				getSize().height, BufferedImage.TYPE_INT_RGB);
 		Graphics g = copyOfImage.createGraphics();
@@ -259,7 +274,7 @@ public class Canvas extends JComponent {
 	/** 
 	 * @param img
 	 */
-	private void saveToStack(Image img) {
+	private void saveToStack(BufferedImage img) {
 		undoStack.push(copyImage(img));
 	}
 
