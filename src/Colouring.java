@@ -24,16 +24,19 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import shape.Rectangle;
+
 public class Colouring {
 
-	private JComboBox<JButton> colBu;
+	private JComboBox<Rectangle> colBu;
 	private Canvas canvas;
 	private ImageControl imgC = new ImageControl();
 	private Color color = Color.WHITE;
-	private JButton clearButton, blueButton, greenButton, redButton,
-			colorPicker, magentaButton, grayButton, orangeButton, yellowButton,
-			pinkButton, cyanButton, lightGrayButton, saveButton, loadButton,
-			saveAsButton, rectangle, pencil, undoButton, redoButton;
+	private JButton clearButton, colorPicker, saveButton, loadButton,
+		saveAsButton, rectangle, pencil, undoButton, redoButton;
+	private Rectangle blueButton, greenButton, redButton,
+		magentaButton, grayButton, orangeButton, yellowButton,
+			pinkButton, cyanButton, lightGrayButton;
 	private JFileChooser fileChooser;
 	private File file;
 	private int saveCounter = 0;
@@ -171,46 +174,18 @@ public class Colouring {
 		redoButton = new JButton(new ImageIcon(imgC.binImgs[2]));
 		redoButton.setPreferredSize(new Dimension(20, 20));
 		redoButton.addActionListener(listener);
-		blueButton = new JButton();
-		blueButton.setBackground(Color.BLUE);
-		blueButton.setPreferredSize(new Dimension(40, 40));
-		blueButton.addActionListener(listener);
-		greenButton = new JButton();
-		greenButton.setBackground(Color.GREEN);
-		greenButton.setPreferredSize(new Dimension(40, 40));
-		greenButton.addActionListener(listener);
-		redButton = new JButton();
-		redButton.setBackground(Color.RED);
-		redButton.setPreferredSize(new Dimension(40, 40));
-		redButton.addActionListener(listener);
-		magentaButton = new JButton();
-		magentaButton.setBackground(Color.MAGENTA);
-		magentaButton.setPreferredSize(new Dimension(40, 40));
-		magentaButton.addActionListener(listener);
-		grayButton = new JButton();
-		grayButton.setBackground(Color.GRAY);
-		grayButton.setPreferredSize(new Dimension(40, 40));
-		grayButton.addActionListener(listener);
-		orangeButton = new JButton();
-		orangeButton.setBackground(Color.ORANGE);
-		orangeButton.setPreferredSize(new Dimension(40, 40));
-		orangeButton.addActionListener(listener);
-		yellowButton = new JButton();
-		yellowButton.setBackground(Color.YELLOW);
-		yellowButton.setPreferredSize(new Dimension(40, 40));
-		yellowButton.addActionListener(listener);
-		pinkButton = new JButton();
-		pinkButton.setBackground(Color.PINK);
-		pinkButton.setPreferredSize(new Dimension(40, 40));
-		pinkButton.addActionListener(listener);
-		cyanButton = new JButton();
-		cyanButton.setBackground(Color.CYAN);
-		cyanButton.setPreferredSize(new Dimension(40, 40));
-		cyanButton.addActionListener(listener);
-		lightGrayButton = new JButton();
-		lightGrayButton.setBackground(Color.LIGHT_GRAY);
-		lightGrayButton.setPreferredSize(new Dimension(40, 40));
-		lightGrayButton.addActionListener(listener);
+
+		blueButton = new Rectangle(0,0,40,40,Color.BLUE,true);
+		greenButton = new Rectangle(0,0,40,40,Color.GREEN,true);
+		redButton = new Rectangle(0,0,40,40,Color.RED,true);
+		magentaButton = new Rectangle(0,0,40,40,Color.MAGENTA,true);
+		grayButton = new Rectangle(0,0,40,40,Color.GRAY,true);
+		orangeButton = new Rectangle(0,0,40,40,Color.ORANGE,true);
+		yellowButton = new Rectangle(0,0,40,40,Color.YELLOW,true);
+		pinkButton = new Rectangle(0,0,40,40,Color.PINK,true);
+		cyanButton = new Rectangle(0,0,40,40,Color.CYAN,true);
+		lightGrayButton = new Rectangle(0,0,40,40,Color.LIGHT_GRAY,true);
+
 		saveButton = new JButton(new ImageIcon(imgC.binImgs[3]));
 		saveButton.addActionListener(listener);
 		saveAsButton = new JButton("Save As");
@@ -238,11 +213,11 @@ public class Colouring {
 		box.add(pencil, BorderLayout.NORTH);
 		box.add(Box.createVerticalStrut(5));
 		box.add(rectangle, BorderLayout.NORTH);*/
-		JButton[] bArr = new JButton[]{blueButton, greenButton, redButton,
+		Rectangle[] bArr = new Rectangle[]{blueButton, greenButton, redButton,
 			magentaButton, grayButton, orangeButton, yellowButton,
 			pinkButton, cyanButton, lightGrayButton};
 
-		colBu = new JComboBox<>(bArr);
+		colBu = new JComboBox<Rectangle>(bArr);
 
 
 		panel.add(colBu);
