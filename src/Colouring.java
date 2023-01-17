@@ -258,7 +258,7 @@ public class Colouring {
 
 		frame.setVisible(true);
 
-		frame.setSize(width+79,height+11);
+		frame.setSize(width+100,height+11);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}

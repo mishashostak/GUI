@@ -15,9 +15,9 @@ import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
 public class InputWH {
-	public int width;
-	public int height;
-	Monoing draw = new Monoing();
+	public static int width;
+	public static int height;
+	private Monoing draw = new Monoing();
 
 	InputWH() {
 		showInput();
