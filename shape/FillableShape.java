@@ -12,7 +12,6 @@ public abstract class FillableShape extends Shape{
         super(initx1, inity1, initx2, inity2, initColor);
         setFilled(initFilled);
     }
-
     
     /** 
      * @return int

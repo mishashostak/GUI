@@ -185,7 +185,7 @@ public class Colouring {
 		pinkButton = new Rectangle(0,0,40,40,Color.PINK,true);
 		cyanButton = new Rectangle(0,0,40,40,Color.CYAN,true);
 		lightGrayButton = new Rectangle(0,0,40,40,Color.LIGHT_GRAY,true);
-		colorPicker = new Rectangle(0,0,40,40,new ImageIcon(imgC.binImgs[5]);
+		Rectangle cpPre = new Rectangle(0,0,40,40,new ImageIcon(imgC.binImgs[5]);
 
 		saveButton = new JButton(new ImageIcon(imgC.binImgs[3]));
 		saveButton.addActionListener(listener);

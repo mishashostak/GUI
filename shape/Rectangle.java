@@ -12,6 +12,14 @@ public class Rectangle extends FillableShape{
         super(initx1,inity1,initx2,inity2, initColor, initFilled);
         rectCount++;
     }
+
+    // Parameterized constructor method for image
+    public Rectangle(int initx1,int inity1,int initx2,int inity2, Image img){
+        super(initx1,inity1,initx2,inity2,null,null);
+        ImageRectangle imgRect = new ImageRectangle(img,this);
+        rectCount++;
+    }
+
     // No-argument constructor method
     public Rectangle(){
         this(0,0,0, 0, Color.BLACK, false);
@@ -55,4 +63,29 @@ public class Rectangle extends FillableShape{
 
         else g.drawRect(getX1(), getX2(), getY1(), getY2());
     } 
+}
+
+class ImageRectangle {
+
+    private final Image image;
+
+    private Rectangle rectangle;
+
+    public ImageRectangle(Image image, Rectangle rectangle) {
+        this.image = image;
+        this.rectangle = rectangle;
+    }
+
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
+
+    public void setRectangle(Rectangle rectangle) {
+        this.rectangle = rectangle;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
 }
