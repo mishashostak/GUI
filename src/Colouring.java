@@ -32,11 +32,11 @@ public class Colouring {
 	private Canvas canvas;
 	private ImageControl imgC = new ImageControl();
 	private Color color = Color.WHITE;
-	private JButton clearButton, colorPicker, saveButton, loadButton,
+	private JButton clearButton, saveButton, loadButton,
 		saveAsButton, rectangle, pencil, undoButton, redoButton;
 	private Rectangle blueButton, greenButton, redButton,
 		magentaButton, grayButton, orangeButton, yellowButton,
-			pinkButton, cyanButton, lightGrayButton;
+			pinkButton, cyanButton, lightGrayButton, colorPicker;
 	private JFileChooser fileChooser;
 	private File file;
 	private int saveCounter = 0;
@@ -185,6 +185,7 @@ public class Colouring {
 		pinkButton = new Rectangle(0,0,40,40,Color.PINK,true);
 		cyanButton = new Rectangle(0,0,40,40,Color.CYAN,true);
 		lightGrayButton = new Rectangle(0,0,40,40,Color.LIGHT_GRAY,true);
+		colorPicker = new Rectangle(0,0,40,40,new ImageIcon(imgC.binImgs[5]);
 
 		saveButton = new JButton(new ImageIcon(imgC.binImgs[3]));
 		saveButton.addActionListener(listener);
@@ -192,8 +193,6 @@ public class Colouring {
 		saveAsButton.addActionListener(listener);
 		loadButton = new JButton("Load");
 		loadButton.addActionListener(listener);
-		colorPicker = new JButton("Color Picker");
-		colorPicker.addActionListener(listener);
 		clearButton = new JButton("Clear");
 		clearButton.addActionListener(listener);
 
@@ -215,7 +214,7 @@ public class Colouring {
 		box.add(rectangle, BorderLayout.NORTH);*/
 		Rectangle[] bArr = new Rectangle[]{blueButton, greenButton, redButton,
 			magentaButton, grayButton, orangeButton, yellowButton,
-			pinkButton, cyanButton, lightGrayButton};
+			pinkButton, cyanButton, lightGrayButton, colorPicker};
 
 		colBu = new JComboBox<Rectangle>(bArr);
 
@@ -224,7 +223,6 @@ public class Colouring {
 		panel.add(saveButton);
 		panel.add(saveAsButton);
 		panel.add(loadButton);
-		panel.add(colorPicker);
 		panel.add(clearButton);
 
 		container.add(panel, BorderLayout.NORTH);

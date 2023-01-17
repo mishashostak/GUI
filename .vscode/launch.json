@@ -9,6 +9,13 @@
             "name": "Launch Driver",
             "request": "launch",
             "mainClass": "Driver",
+            "projectName": "GUI-3_97f90eef"
+        },
+        {
+            "type": "java",
+            "name": "Launch Driver",
+            "request": "launch",
+            "mainClass": "Driver",
             "projectName": "GUI-1_fdad9615"
         },
         {

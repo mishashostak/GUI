@@ -104,6 +104,8 @@ public class Monoing {
 		redoButton = new JButton(new ImageIcon(imgC.binImgs[2]));
 		redoButton.setPreferredSize(new Dimension(20, 20));
 		redoButton.addActionListener(listener);
+		saveButton = new JButton(new ImageIcon(imgC.binImgs[3]));
+		saveButton.addActionListener(listener);
 		clearButton = new JButton("Clear");
 		clearButton.addActionListener(listener);
 
