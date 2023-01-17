@@ -6,15 +6,12 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-
 import javax.swing.JComponent;
 import javax.swing.event.MouseInputAdapter;
 
@@ -23,7 +20,6 @@ public class MonoCanvas extends JComponent {
 	private int X1, Y1, X2, Y2;
 	private Graphics2D g;
 	private Image img, background, undoTemp, redoTemp;
-	ArrayList<Shape> shapes = new ArrayList<Shape>();
 	private final SizedStack<Image> undoStack = new SizedStack<>(12);
 	private final SizedStack<Image> redoStack = new SizedStack<>(12);
 	private Rectangle shape;

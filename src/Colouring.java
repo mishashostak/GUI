@@ -34,7 +34,7 @@ public class Colouring {
 	private Color color = Color.WHITE;
 	private JButton clearButton, saveButton, loadButton,
 		saveAsButton, rectangle, pencil, undoButton, redoButton;
-	private BufferedImage blueButton, greenButton, redButton,
+	private BufferedImage blackButton, blueButton, greenButton, redButton,
 		magentaButton, grayButton, orangeButton, yellowButton,
 			pinkButton, cyanButton, lightGrayButton, colorPicker;
 	private JFileChooser fileChooser;
@@ -55,26 +55,6 @@ public class Colouring {
 		public void actionPerformed(ActionEvent event) {
 			if (event.getSource() == clearButton) {
 				canvas.clear();
-			} else if (event.getSource() == blueButton) {
-				canvas.blue();
-			} else if (event.getSource() == greenButton) {
-				canvas.green();
-			} else if (event.getSource() == redButton) {
-				canvas.red();
-			} else if (event.getSource() == magentaButton) {
-				canvas.magenta();
-			} else if (event.getSource() == grayButton) {
-				canvas.gray();
-			} else if (event.getSource() == orangeButton) {
-				canvas.orange();
-			} else if (event.getSource() == yellowButton) {
-				canvas.yellow();
-			} else if (event.getSource() == pinkButton) {
-				canvas.pink();
-			} else if (event.getSource() == cyanButton) {
-				canvas.cyan();
-			} else if (event.getSource() == lightGrayButton) {
-				canvas.lightGray();
 			} else if (event.getSource() == undoButton) {
 				canvas.undo();
 			} else if (event.getSource() == redoButton) {
@@ -83,12 +63,43 @@ public class Colouring {
 				canvas.rect();
 			} else if (event.getSource() == pencil) {
 				canvas.pencil();
-			} else if (event.getSource() == colorPicker) {
-				color = JColorChooser.showDialog(null, "Pick your color!",
-						color);
-				if (color == null)
-					color = (Color.WHITE);
-				canvas.picker(color);
+			} else if (event.getSource() == colBu) {
+				/**
+				 * new ImageIcon[]{new ImageIcon(blueButton), new ImageIcon(greenButton), new ImageIcon(redButton),
+			new ImageIcon(magentaButton), new ImageIcon(grayButton), new ImageIcon(orangeButton), new ImageIcon(yellowButton),
+			new ImageIcon(pinkButton), new ImageIcon(cyanButton), new ImageIcon(lightGrayButton), new ImageIcon(colorPicker)
+				 */
+				@SuppressWarnings("unchecked")
+				JComboBox<ImageIcon> combo = (JComboBox<ImageIcon>) event.getSource();
+				if (combo.getSelectedIndex() == 0) {
+					canvas.black();
+				} else if (combo.getSelectedIndex() == 1) {
+					canvas.blue();
+				} else if (combo.getSelectedIndex() == 2) {
+					canvas.green();
+				} else if (combo.getSelectedIndex() == 3) {
+					canvas.red();
+				} else if (combo.getSelectedIndex() == 4) {
+					canvas.magenta();
+				} else if (combo.getSelectedIndex() == 5) {
+					canvas.gray();
+				} else if (combo.getSelectedIndex() == 6) {
+					canvas.orange();
+				} else if (combo.getSelectedIndex() == 7) {
+					canvas.yellow();
+				} else if (combo.getSelectedIndex() == 8) {
+					canvas.pink();
+				} else if (combo.getSelectedIndex() == 9) {
+					canvas.cyan();
+				} else if (combo.getSelectedIndex() == 10) {
+					canvas.lightGray();
+				} else if (combo.getSelectedIndex() == 11) {
+					color = JColorChooser.showDialog(null, "Pick your color!", color);
+					if (color == null)
+						color = (Color.WHITE);
+					canvas.picker(color);
+				}
+			
 			} else if (event.getSource() == saveButton) {
 				if (saveCounter == 0) {
 					fileChooser = new JFileChooser();
@@ -180,6 +191,11 @@ public class Colouring {
 		redoButton.setPreferredSize(new Dimension(20, 20));
 		redoButton.addActionListener(listener);
 
+		blackButton = new BufferedImage(40,40,BufferedImage.TYPE_INT_RGB);
+		Graphics2D gBlack = blackButton.createGraphics();
+        gBlack.setColor(Color.BLACK);
+        gBlack.fillRect(0,0,40,40);
+        gBlack.dispose();
 		blueButton = new BufferedImage(40,40,BufferedImage.TYPE_INT_RGB);
 		Graphics2D gBlue = blueButton.createGraphics();
         gBlue.setColor(Color.BLUE);
@@ -261,11 +277,12 @@ public class Colouring {
 		box.add(pencil, BorderLayout.NORTH);
 		box.add(Box.createVerticalStrut(5));
 		box.add(rectangle, BorderLayout.NORTH);*/
-		ImageIcon[] bArr = new ImageIcon[]{new ImageIcon(blueButton), new ImageIcon(greenButton), new ImageIcon(redButton),
+		ImageIcon[] bArr = new ImageIcon[]{new ImageIcon(blackButton),new ImageIcon(blueButton), new ImageIcon(greenButton), new ImageIcon(redButton),
 			new ImageIcon(magentaButton), new ImageIcon(grayButton), new ImageIcon(orangeButton), new ImageIcon(yellowButton),
 			new ImageIcon(pinkButton), new ImageIcon(cyanButton), new ImageIcon(lightGrayButton), new ImageIcon(colorPicker)};
 
 		colBu = new JComboBox<ImageIcon>(bArr);
+		colBu.addActionListener(listener);
 
 
 		panel.add(colBu);

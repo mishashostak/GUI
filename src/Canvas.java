@@ -229,13 +229,12 @@ public class Canvas extends JComponent {
 		if (image == null) {
 			try {
 				image = (BufferedImage) createImage(getSize().width, getSize().height);
-				image.createGraphics();
+				g = image.createGraphics();
 				g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 						RenderingHints.VALUE_ANTIALIAS_ON);
 				clear();
 				img = image;
 			} catch(NullPointerException e) {
-				e.printStackTrace();
 			}
 		} 
 		else {

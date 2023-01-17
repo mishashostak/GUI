@@ -22,6 +22,7 @@ public class Monoing {
 
 	private MonoCanvas canvas;
 	private ImageControl imgC = new ImageControl();
+	private JFrame frame;
 	private JButton clearButton, saveButton, rectangle, pencil, undoButton, redoButton;
 	private JLabel filenameBar, thicknessStat;
 	private JSlider thicknessSlider;
@@ -47,6 +48,7 @@ public class Monoing {
 			} else if (event.getSource() == pencil) {
 				canvas.pencil();
 			} else if (event.getSource() == saveButton) {
+				frame.dispose();
 				canvas.save();
 			}
 		}
@@ -73,7 +75,7 @@ public class Monoing {
 	            break;
 	        }
 	    }
-		JFrame frame = new JFrame("Drawing");
+		frame = new JFrame("Drawing");
 		Container container = frame.getContentPane();
 		container.setLayout(new BorderLayout());
 		canvas = new MonoCanvas();
