@@ -1,15 +1,29 @@
 import java.awt.Graphics2D;
-import java.awt.color.ColorSpace;
+//import java.awt.Graphics;
+import java.awt.Color;
+//import java.awt.BorderLayout;
+//import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorConvertOp;
+import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+/* 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+*/
 
 public class ImageControl {
-    public BufferedImage[] binImgs;
-    private BufferedImage srcImg;
+    protected BufferedImage[] binImgs;
+    private BufferedImage srcImg, finImg, grayImg;
+    private boolean fin = false;
 
     public ImageControl(){
         File path = new File("bin");
@@ -22,35 +36,131 @@ public class ImageControl {
         }
     }
 
-    public ImageControl(File file) {
-        BufferedImage oImg = OutlineImage(file);
-        new Colouring(oImg, oImg.getWidth(), oImg.getHeight());
+    public ImageControl(String file) {
+        try{
+            srcImg = ImageIO.read(new File(file));
+            OutlineImage();
+            while(!fin);
+            new Colouring(finImg, srcImg.getWidth(), srcImg.getHeight());
+        } catch (IOException|NullPointerException e) {e.printStackTrace();}
     }
 
-    public BufferedImage OutlineImage(File file) {
-        try {
-            srcImg = ImageIO.read(file);
-        } catch (IOException e) {e.printStackTrace();}
-        Graphics2D g = srcImg.createGraphics();
-        g.drawImage(srcImg, null, 0, 0);
-			BufferedImage grayImage = new BufferedImage(srcImg.getWidth(), srcImg.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
-			g = grayImage.createGraphics();
-			g.drawImage(srcImg, 0, 0, null);
-
-            ColorConvertOp op = new ColorConvertOp(ColorSpace.getInstance(ColorSpace.CS_GRAY), null);
-            op.filter(grayImage,grayImage);
-
-            BufferedImage blackWhite = new BufferedImage(srcImg.getWidth(), srcImg.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
-            g = blackWhite.createGraphics();
-            g.drawImage(grayImage, null, 0, 0);
-            g.dispose();
-        /*
-        int[][] src2d = new int[srcImg.getHeight()][srcImg.getWidth()];
-        for(int i = 0; i < 2048; i++)
-            for(int j = 0; j < 2048; j++)
-                src2d[i][j] = srcImg.getRGB(i, j);
+    public void OutlineImage() {
+        /* 
+        float[] scales = {2f, 2f, 2f};
+        float[] offsets = new float[4];
+        RescaleOp rop = new RescaleOp(scales, offsets, null);
         */
 
-        return blackWhite;
+        grayImg = new BufferedImage(
+            srcImg.getWidth(), srcImg.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
+        Graphics2D g = grayImg.createGraphics();
+        g.drawImage(srcImg, 0, 0, null);
+        BufferedImage blk = OnlyBlack(grayImg);
+
+        /*
+        final BufferedImage scaledImage = new BufferedImage(
+            srcImg.getWidth(), srcImg.getHeight(), BufferedImage.TYPE_INT_RGB);
+        g = scaledImage.createGraphics();
+        g.drawImage(srcImg, rop, 0, 0);
+        */
+
+        g.dispose();
+
+        finImg = blk;
+        fin = true;
+
+        /* 
+        Runnable r = new Runnable() {
+
+            @Override
+            public void run() {
+                JPanel gui = new JPanel(new BorderLayout(2, 2));
+                JPanel images = new JPanel(new GridLayout(0, 2, 2, 2));
+                gui.add(images, BorderLayout.CENTER);
+
+                final JLabel scaled = new JLabel(new ImageIcon(scaledImage));
+                final JLabel bwLabel = new JLabel(new ImageIcon(blk));
+                final JSlider brighten = new JSlider(0, 1000, 100);
+                gui.add(brighten, BorderLayout.PAGE_START);
+                ChangeListener cl = new ChangeListener() {
+
+                    @Override
+                    public void stateChanged(ChangeEvent e) {
+                        int val = brighten.getValue();
+                        float valFloat = val / 1000f;
+                        BufferedImage bi = Brighten(srcImg, valFloat);
+                        BufferedImage gr = new BufferedImage(
+                                srcImg.getWidth(), srcImg.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
+                        Graphics g = gr.createGraphics();
+                        g.drawImage(bi, 0, 0, null);
+
+                        scaled.setIcon(new ImageIcon(gr));
+                    }
+                };
+                brighten.addChangeListener(cl);
+
+                images.add(bwLabel);
+                images.add(scaled);
+
+                String[] opts = {"1", "2"};
+                int choice = JOptionPane.showOptionDialog(null, 
+                    gui, 
+                "image picker", 
+                JOptionPane.YES_NO_OPTION, 
+                JOptionPane.QUESTION_MESSAGE, 
+                null, opts, null);
+
+                if (choice == JOptionPane.YES_OPTION) {
+                    ImageIcon icon = (ImageIcon) bwLabel.getIcon();
+                    finImg = (BufferedImage) icon.getImage();
+                    fin = true;
+                }
+                else if (choice == JOptionPane.NO_OPTION) {
+                    ImageIcon icon = (ImageIcon) scaled.getIcon();
+                    finImg = (BufferedImage) icon.getImage();
+                    fin = true;
+                }
+            }
+        };
+        SwingUtilities.invokeLater(r);
+        */
     }
+
+    /**
+     * Returns the supplied src image brightened by a float value from 0 to 10.
+     * Float values below 1.0f actually darken the source image.
+     */
+    public static BufferedImage Brighten(BufferedImage src, float level) {
+        BufferedImage dst = new BufferedImage(
+                src.getWidth(), src.getHeight(), BufferedImage.TYPE_INT_RGB);
+        float[] scales = {level, level, level};
+        float[] offsets = new float[4];
+        RescaleOp rop = new RescaleOp(scales, offsets, null);
+
+        Graphics2D g = dst.createGraphics();
+        g.drawImage(src, rop, 0, 0);
+        g.dispose();
+
+        return dst;
+    }
+
+    private BufferedImage OnlyBlack(BufferedImage inp) {
+        Color BLK = new Color(0,0,0);
+        final int BLKRGB = BLK.getRGB();
+        //Color WHT = new Color(255,255,255);
+        //final int WHTRGB = WHT.getRGB();
+
+        int WIDTH = inp.getWidth();
+        int HEIGHT = inp.getHeight();
+        int pixels[] = new int[WIDTH*HEIGHT];
+        inp.getRGB(0, 0, WIDTH, HEIGHT, pixels, 0, WIDTH);
+        for(int i=0; i<pixels.length;i++) {
+            if (pixels[i] != BLKRGB) {
+                pixels[i] = 0x00ffffff;
+            }
+        }
+        inp.setRGB(0, 0, WIDTH, HEIGHT, pixels, 0, WIDTH);
+        return inp;
+        }
 }

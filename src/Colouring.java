@@ -33,7 +33,7 @@ public class Colouring {
 	private ImageControl imgC = new ImageControl();
 	private Color color = Color.WHITE;
 	private JButton clearButton, saveButton, loadButton,
-		saveAsButton, rectangle, pencil, undoButton, redoButton;
+		saveAsButton, rectangle, pencil, undoButton, redoButton, fillButton;
 	private BufferedImage blackButton, blueButton, greenButton, redButton,
 		magentaButton, grayButton, orangeButton, yellowButton,
 			pinkButton, cyanButton, lightGrayButton, colorPicker;
@@ -63,6 +63,8 @@ public class Colouring {
 				canvas.rect();
 			} else if (event.getSource() == pencil) {
 				canvas.pencil();
+			} else if (event.getSource() == fillButton) {
+				canvas.fill();
 			} else if (event.getSource() == colBu) {
 				/**
 				 * new ImageIcon[]{new ImageIcon(blueButton), new ImageIcon(greenButton), new ImageIcon(redButton),
@@ -251,6 +253,8 @@ public class Colouring {
         gColPick.drawImage((Image)imgC.binImgs[5],0,0,40,40,null);
         gColPick.dispose();
 
+		fillButton = new JButton(new ImageIcon(imgC.binImgs[6]));
+		fillButton.addActionListener(listener);
 
 		saveButton = new JButton(new ImageIcon(imgC.binImgs[3]));
 		saveButton.addActionListener(listener);
@@ -273,10 +277,10 @@ public class Colouring {
 		box.add(undoButton, BorderLayout.NORTH);
 		box.add(Box.createVerticalStrut(5));
 		box.add(redoButton, BorderLayout.NORTH);
-		/*box.add(Box.createVerticalStrut(5));
+		box.add(Box.createVerticalStrut(5));
 		box.add(pencil, BorderLayout.NORTH);
 		box.add(Box.createVerticalStrut(5));
-		box.add(rectangle, BorderLayout.NORTH);*/
+		box.add(rectangle, BorderLayout.NORTH);
 		ImageIcon[] bArr = new ImageIcon[]{new ImageIcon(blackButton),new ImageIcon(blueButton), new ImageIcon(greenButton), new ImageIcon(redButton),
 			new ImageIcon(magentaButton), new ImageIcon(grayButton), new ImageIcon(orangeButton), new ImageIcon(yellowButton),
 			new ImageIcon(pinkButton), new ImageIcon(cyanButton), new ImageIcon(lightGrayButton), new ImageIcon(colorPicker)};

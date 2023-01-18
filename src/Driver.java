@@ -1,5 +1,3 @@
-import java.io.File;
-
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -19,8 +17,8 @@ public class Driver {
             int response = fileChooser.showSaveDialog(null);
 
             if(response == JFileChooser.APPROVE_OPTION) {
-                File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-                new ImageControl(file);
+                new ImageControl(fileChooser.getSelectedFile().getAbsolutePath());
+                
             }
         } else if (reply == 1) {
             new InputWH();

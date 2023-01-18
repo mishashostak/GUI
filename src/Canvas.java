@@ -221,7 +221,10 @@ public class Canvas extends JComponent {
 		addMouseMotionListener(ml);
 	}
 
-	
+	public void fill() {
+		
+	}
+
 	/** 
 	 * @param img
 	 */
