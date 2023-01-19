@@ -32,7 +32,7 @@ public class Canvas extends JComponent {
 	private Rectangle shape;
 	private MouseMotionListener motion;
 	private MouseListener listener;
-	protected boolean fill = false;
+	private FillMouseListener fml;
 
 	
 	/** 
@@ -210,7 +210,6 @@ public class Canvas extends JComponent {
 		removeMouseListener(listener);
 		removeMouseMotionListener(motion);
 		defaultListener();
-		
 	}
 
 	public void rect() {
@@ -222,7 +221,18 @@ public class Canvas extends JComponent {
 	}
 
 	public void setFill(boolean fill){
-		this.fill = fill;
+		if (fill){
+			removeMouseListener(listener);
+			removeMouseMotionListener(motion);
+			fml = new FillMouseListener();
+			addMouseListener(fml);
+			addMouseMotionListener(fml);
+		}
+		else if (!fill){
+			removeMouseListener(fml);
+			removeMouseMotionListener(fml);
+			defaultListener();
+		}
 	}
 
 	private void floodFill(BufferedImage img, Point point, Color target, Color replacement) {
@@ -325,8 +335,7 @@ public class Canvas extends JComponent {
 		public void mousePressed(MouseEvent e)
 		{
 			startPoint = e.getPoint();
-
-			if(!fill) shape = new Rectangle();
+			shape = new Rectangle();
 		}
 
 		public void mouseDragged(MouseEvent e)
@@ -346,13 +355,21 @@ public class Canvas extends JComponent {
 			{
 				addRectangle(shape, e.getComponent().getForeground());
 			}
-			else if(fill) {
-                floodFill(copyImage(img),startPoint, Color.WHITE, e.getComponent().getForeground());
-			}
 
 			shape = null;
 		}
 	}
-}
 
-	
+	class FillMouseListener extends MouseInputAdapter
+	{
+		private Point startPoint;
+
+		public void mousePressed(MouseEvent e)
+		{
+			startPoint = e.getPoint();
+			g = (Graphics2D) img.getGraphics();
+
+			floodFill(copyImage(img),startPoint, Color.WHITE, (Color)g.getPaint());
+		}
+	}
+}
