@@ -4,12 +4,12 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.JToggleButton;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -32,8 +33,10 @@ public class Colouring {
 	private Canvas canvas;
 	private ImageControl imgC = new ImageControl();
 	private Color color = Color.WHITE;
+	protected boolean fill = false;
 	private JButton clearButton, saveButton, loadButton,
-		saveAsButton, rectangle, pencil, undoButton, redoButton, fillButton;
+		saveAsButton, rectangle, pencil, undoButton, redoButton;
+	private JToggleButton fillButton;
 	private BufferedImage blackButton, blueButton, greenButton, redButton,
 		magentaButton, grayButton, orangeButton, yellowButton,
 			pinkButton, cyanButton, lightGrayButton, colorPicker;
@@ -64,7 +67,9 @@ public class Colouring {
 			} else if (event.getSource() == pencil) {
 				canvas.pencil();
 			} else if (event.getSource() == fillButton) {
-				canvas.fill();
+				AbstractButton abstractButton = (AbstractButton)event.getSource();
+				boolean selected = abstractButton.getModel().isSelected();
+				canvas.setFill(selected);
 			} else if (event.getSource() == colBu) {
 				/**
 				 * new ImageIcon[]{new ImageIcon(blueButton), new ImageIcon(greenButton), new ImageIcon(redButton),
@@ -250,10 +255,10 @@ public class Colouring {
         gLG.dispose();
 		colorPicker = new BufferedImage(40,40,BufferedImage.TYPE_INT_RGB);
 		Graphics2D gColPick = colorPicker.createGraphics();
-        gColPick.drawImage((Image)imgC.binImgs[5],0,0,40,40,null);
+        gColPick.drawImage(imgC.binImgs[5],0,0,40,40,null);
         gColPick.dispose();
 
-		fillButton = new JButton(new ImageIcon(imgC.binImgs[6]));
+		fillButton = new JToggleButton(new ImageIcon(imgC.binImgs[6]));
 		fillButton.addActionListener(listener);
 
 		saveButton = new JButton(new ImageIcon(imgC.binImgs[3]));
@@ -278,9 +283,7 @@ public class Colouring {
 		box.add(Box.createVerticalStrut(5));
 		box.add(redoButton, BorderLayout.NORTH);
 		box.add(Box.createVerticalStrut(5));
-		box.add(pencil, BorderLayout.NORTH);
-		box.add(Box.createVerticalStrut(5));
-		box.add(rectangle, BorderLayout.NORTH);
+		box.add(fillButton, BorderLayout.NORTH);
 		ImageIcon[] bArr = new ImageIcon[]{new ImageIcon(blackButton),new ImageIcon(blueButton), new ImageIcon(greenButton), new ImageIcon(redButton),
 			new ImageIcon(magentaButton), new ImageIcon(grayButton), new ImageIcon(orangeButton), new ImageIcon(yellowButton),
 			new ImageIcon(pinkButton), new ImageIcon(cyanButton), new ImageIcon(lightGrayButton), new ImageIcon(colorPicker)};

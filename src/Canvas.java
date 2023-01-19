@@ -6,7 +6,6 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -16,7 +15,8 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
@@ -27,12 +27,12 @@ public class Canvas extends JComponent {
 	private int X1, Y1, X2, Y2;
 	private Graphics2D g;
 	private BufferedImage img, background, undoTemp, redoTemp;
-	ArrayList<Shape> shapes = new ArrayList<Shape>();
 	private final SizedStack<Image> undoStack = new SizedStack<>(12);
 	private final SizedStack<Image> redoStack = new SizedStack<>(12);
 	private Rectangle shape;
 	private MouseMotionListener motion;
 	private MouseListener listener;
+	protected boolean fill = false;
 
 	
 	/** 
@@ -221,8 +221,38 @@ public class Canvas extends JComponent {
 		addMouseMotionListener(ml);
 	}
 
-	public void fill() {
-		
+	public void setFill(boolean fill){
+		this.fill = fill;
+	}
+
+	private void floodFill(BufferedImage img, Point point, Color target, Color replacement) {
+        int width = img.getWidth() - 1;
+        int height = img.getHeight() - 1;
+        int targetRGB = target.getRGB();
+        int replacementRGB = replacement.getRGB();
+
+        Queue<Point> queue = new LinkedList<Point>();
+        queue.add( point );
+
+        while (!queue.isEmpty()) {
+            Point p = queue.remove();
+            int imageRGB = img.getRGB(p.x, p.y);
+
+            if (imageRGB != targetRGB) continue;
+
+            //  Update the image and check surrounding pixels
+
+            img.setRGB(p.x, p.y, replacementRGB);
+
+            if (p.x > 0) queue.add( new Point(p.x - 1, p.y) );
+            if (p.x +1 < width) queue.add( new Point(p.x + 1, p.y) );
+            if (p.y > 0) queue.add( new Point(p.x, p.y - 1) );
+            if (p.y +1 < height) queue.add( new Point(p.x, p.y + 1) );
+        }
+		Graphics2D g2d = (Graphics2D) this.img.getGraphics();
+		g2d.setColor(replacement);
+		this.img = copyImage(img);
+		repaint();
 	}
 
 	/** 
@@ -295,7 +325,8 @@ public class Canvas extends JComponent {
 		public void mousePressed(MouseEvent e)
 		{
 			startPoint = e.getPoint();
-			shape = new Rectangle();
+
+			if(!fill) shape = new Rectangle();
 		}
 
 		public void mouseDragged(MouseEvent e)
@@ -314,6 +345,9 @@ public class Canvas extends JComponent {
 			if (shape.width != 0 || shape.height != 0)
 			{
 				addRectangle(shape, e.getComponent().getForeground());
+			}
+			else if(fill) {
+                floodFill(copyImage(img),startPoint, Color.WHITE, e.getComponent().getForeground());
 			}
 
 			shape = null;
