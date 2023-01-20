@@ -40,7 +40,6 @@ public class Canvas extends JComponent {
 	private MouseListener listener;
 	private FillMouseListener fml;
 	private Color chosCol = Color.BLACK;
-
 	
 	/** 
 	 * Saves desired image as a file
@@ -54,7 +53,6 @@ public class Canvas extends JComponent {
 		}
 	}
 
-	
 	/** 
 	 * Loads desired file as an image
 	 * 
@@ -70,7 +68,6 @@ public class Canvas extends JComponent {
 		}
 	}
 
-	
 	/** 
 	 * Typical paintComponent, it paints
 	 * 
@@ -137,7 +134,6 @@ public class Canvas extends JComponent {
 		addMouseMotionListener(motion);
 	}
 
-	
 	/** 
 	 * @param rectangle
 	 * @param color
@@ -213,7 +209,6 @@ public class Canvas extends JComponent {
 		setCol(Color.lightGray);
 	}
 
-	
 	/** 
 	 * @param color Chosen color from JColorChooser
 	 */
@@ -281,7 +276,6 @@ public class Canvas extends JComponent {
 		addMouseMotionListener(ml);
 	}
 
-	
 	/** 
 	 * Changes all MouseListeners to either the 
 	 * Fill feature or the drawing feature
@@ -303,7 +297,6 @@ public class Canvas extends JComponent {
 		}
 	}
 
-	
 	/** 
 	 * Replicates a common paint-bucket style fill function,
 	 * uses a looped LinkedList as a glorified recursive method
@@ -367,7 +360,6 @@ public class Canvas extends JComponent {
 			repaint();
 		}
 	}
-
 	
 	/** 
 	 * Sets background and foreground using setImage
@@ -379,7 +371,6 @@ public class Canvas extends JComponent {
 		setImage(null);
 	}
 
-	
 	/** 
 	 * Copies and returns input image as new object
 	 * 
@@ -394,7 +385,6 @@ public class Canvas extends JComponent {
 		return copyOfImage;
 	}
 
-	
 	/** 
 	 * Saves object (in this case, BufferedImage) to SizedStack for 
 	 * undo and redo method purposes
@@ -404,7 +394,6 @@ public class Canvas extends JComponent {
 	private void saveToStack(BufferedImage img) {
 		undoStack.push(copyImage(img));
 	}
-
 	
 	/** 
 	 * Sets the thickness of line drawn
