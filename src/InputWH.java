@@ -14,15 +14,32 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
+/**
+ * This class asks for the user's desired Width and 
+ * Height of the image they look to create
+ * 
+ * @author Misha Shostak
+ * 
+ * @version 1/19/2023
+ */
 public class InputWH {
 	private static int width;
 	private int height;
 	private Monoing draw = new Monoing();
 
+	/**
+     * Non-parameterized constructor
+	 * calls showInput() method
+     */
 	InputWH() {
 		showInput();
 	}
 
+	/**
+	 * This method creates a window in which the user is 
+	 * prompted for width and height values
+	 * (the Minimum values are set at W: 900 and H: 800 )
+	 */
 	private void showInput() {
 		for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 	        if ("Nimbus".equals(info.getName())) {
@@ -71,6 +88,9 @@ public class InputWH {
 
 }
 
+/**
+ * Listener class for the showInput() window
+ */
 class RequestFocusListener implements AncestorListener {
 	private boolean removeListener;
 

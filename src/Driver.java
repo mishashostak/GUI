@@ -1,8 +1,17 @@
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+/**
+ * Simple Main class that begins program
+ * 
+ * @author Misha Shostak
+ * 
+ * @version 1/19/2023
+ */
 public class Driver {
     /**
+     * typical main method
+     * 
 	 * @param args
 	 */
 	public static void main(String[] args) {

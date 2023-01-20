@@ -18,6 +18,14 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/**
+ * This class works in tandem with MonoCanvas to develop a 
+ * strictly black and white drawing GUI
+ * 
+ * @author Misha Shostak
+ * 
+ * @version 1/19/2023
+ */
 public class Monoing {
 
 	private MonoCanvas canvas;
@@ -27,6 +35,7 @@ public class Monoing {
 	private JLabel filenameBar, thicknessStat;
 	private JSlider thicknessSlider;
 	private int width, height;
+	//ChangeListener for thickness slider
 	private ChangeListener thick = new ChangeListener() {
 		public void stateChanged(ChangeEvent e) {
 			thicknessStat.setText(String.format("%s",
@@ -34,6 +43,7 @@ public class Monoing {
 			canvas.setThickness(thicknessSlider.getValue());
 		}
 	};
+	//ActionListener for virtually all buttons and actions performed
 	ActionListener listener = new ActionListener() {
 
 		public void actionPerformed(ActionEvent event) {
@@ -55,6 +65,8 @@ public class Monoing {
 	};
 	
 	/** 
+	 * Sets width and height instance variables
+	 * 
 	 * @param width
 	 * @param height
 	 */
@@ -62,6 +74,11 @@ public class Monoing {
 		this.width = width;
 		this.height = height;
 	}
+
+	/**
+	 * This method creates all components necessary to create
+	 * and show the GUI
+	 */
 	public void openPaint() {
 		for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 	        if ("Nimbus".equals(info.getName())) {

@@ -20,12 +20,24 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 */
 
+/**
+ * This class accesses GUI icons 
+ * and alters input images
+ * 
+ * @author Misha Shostak
+ * 
+ * @version 1/19/2023
+ */
 public class ImageControl {
     protected BufferedImage[] binImgs;
     private BufferedImage srcImg, finImg, grayImg;
     private boolean fin = false;
 
+    /**
+     * Non-parameterized constructor that accesses images in "bin"
+     */
     public ImageControl(){
+        //this works because of .classpath
         File path = new File("bin");
         File[] binArr = path.listFiles();
         binImgs = new BufferedImage[path.listFiles().length];
@@ -36,6 +48,13 @@ public class ImageControl {
         }
     }
 
+    /**
+     * Parameterized constructor to begin the paint program
+     * after user opts to open a file for colouring
+     * (is not called by load function, only Driver)
+     * 
+     * @param file
+     */
     public ImageControl(String file) {
         try{
             srcImg = ImageIO.read(new File(file));
@@ -45,6 +64,9 @@ public class ImageControl {
         } catch (IOException|NullPointerException e) {e.printStackTrace();}
     }
 
+    /**
+     * Finds the appropriate outlines of any input image
+     */
     public void OutlineImage() {
         /* 
         float[] scales = {2f, 2f, 2f};
@@ -130,6 +152,11 @@ public class ImageControl {
     /**
      * Returns the supplied src image brightened by a float value from 0 to 10.
      * Float values below 1.0f actually darken the source image.
+     * 
+     * @param src
+     * @param level
+     * 
+     * @return BufferedImage
      */
     public static BufferedImage Brighten(BufferedImage src, float level) {
         BufferedImage dst = new BufferedImage(
@@ -147,7 +174,12 @@ public class ImageControl {
 
     
     /** 
+     * This method finds all black pixels in an image
+     * and returns an image with only those pixels
+     * (all others are white or opaque)
+     * 
      * @param inp
+     * 
      * @return BufferedImage
      */
     private BufferedImage OnlyBlack(BufferedImage inp) {

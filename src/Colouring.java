@@ -27,6 +27,13 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/**
+ * This class works in tandem with Canvas to develop a colouring GUI
+ * 
+ * @author Misha Shostak
+ * 
+ * @version 1/19/2023
+ */
 public class Colouring {
 
 	private JComboBox<ImageIcon> colBu;
@@ -46,6 +53,7 @@ public class Colouring {
 	private JLabel filenameBar, thicknessStat;
 	private JSlider thicknessSlider;
 	private int width, height;
+	//ChangeListener for thickness slider
 	private ChangeListener thick = new ChangeListener() {
 		public void stateChanged(ChangeEvent e) {
 			thicknessStat.setText(String.format("%s",
@@ -53,6 +61,7 @@ public class Colouring {
 			canvas.setThickness(thicknessSlider.getValue());
 		}
 	};
+	//ActionListener for virtually all buttons and actions performed
 	ActionListener listener = new ActionListener() {
 
 		public void actionPerformed(ActionEvent event) {
@@ -139,6 +148,14 @@ public class Colouring {
 		}
 	};
 
+	/**
+     * Parameterized constructor to begin the paint program
+	 * calls openPaint() method
+     * 
+     * @param img Given image to be set as background
+     * @param width 
+     * @param height
+     */
 	public Colouring(BufferedImage img, int width, int height) {
 		setWH(width, height);
 		canvas = new Canvas(img, width, height);
@@ -146,6 +163,8 @@ public class Colouring {
 	}
 	
 	/** 
+	 * Sets width and height instance variables
+	 * 
 	 * @param width
 	 * @param height
 	 */
@@ -154,6 +173,10 @@ public class Colouring {
 		this.height = height;
 	}
 
+	/**
+	 * This method creates all components necessary to create
+	 * and show the GUI
+	 */
 	public void openPaint() {
 		for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 	        if ("Nimbus".equals(info.getName())) {

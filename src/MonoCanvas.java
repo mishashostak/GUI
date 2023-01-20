@@ -15,7 +15,13 @@ import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import javax.swing.event.MouseInputAdapter;
 
-
+/**
+ * This class is the canvas for the Monoing class
+ * 
+ * @author Misha Shostak
+ * 
+ * @version 1/19/2023
+ */
 public class MonoCanvas extends JComponent {
 	private int X1, Y1, X2, Y2;
 	private Graphics2D g;
@@ -28,6 +34,8 @@ public class MonoCanvas extends JComponent {
 
 	
 	/** 
+	 * Saves desired image as a file
+	 * 
 	 * @param file
 	 */
 	public void save() {
@@ -36,6 +44,8 @@ public class MonoCanvas extends JComponent {
 
 	
 	/** 
+	 * Typical paintComponent, it paints
+	 * 
 	 * @param g1
 	 */
 	protected void paintComponent(Graphics g1) {
@@ -56,11 +66,18 @@ public class MonoCanvas extends JComponent {
 		}
 	}
 
+	/**
+     * Non-parameterized constructor 
+	 * sets background and listeners
+     */
 	public MonoCanvas() {
 		setBackground(Color.WHITE);
 		defaultListener();
 	}
 
+	/**
+	 * Sets standard mouse listeners for drawing function
+	 */
 	public void defaultListener() {
 		setDoubleBuffered(false);
 		listener = new MouseAdapter() {
@@ -101,7 +118,10 @@ public class MonoCanvas extends JComponent {
 		repaint();
 	}
 
-
+	/**
+	 * This method removes all altered foreground,
+	 * clearing the canvas/image
+	 */
 	public void clear() {
 		if (background != null) {
 			setImage(copyImage(background));
@@ -113,6 +133,10 @@ public class MonoCanvas extends JComponent {
 		repaint();
 	}
 
+	/**
+	 * Undo function
+	 * Uses a SizedStack
+	 */
 	public void undo() {
 		if (undoStack.size() > 0) {
 			undoTemp = undoStack.pop();
@@ -121,6 +145,10 @@ public class MonoCanvas extends JComponent {
 		}
 	}
 
+	/**
+	 * Redo function
+	 * Uses a SizedStack
+	 */
 	public void redo() {
 		if (redoStack.size() > 0) {
 			redoTemp = redoStack.pop();
@@ -129,6 +157,9 @@ public class MonoCanvas extends JComponent {
 		}
 	}
 
+	/**
+	 * Serves only to debug
+	 */
 	public void pencil() {
 		removeMouseListener(listener);
 		removeMouseMotionListener(motion);
@@ -136,6 +167,9 @@ public class MonoCanvas extends JComponent {
 		
 	}
 
+	/**
+	 * Serves only to debug
+	 */
 	public void rect() {
 		removeMouseListener(listener);
 		removeMouseMotionListener(motion);
@@ -146,6 +180,9 @@ public class MonoCanvas extends JComponent {
 
 	
 	/** 
+	 * Sets the img instance variable
+	 * Also capable of creating blank image if param is set to null
+	 * 
 	 * @param img
 	 */
 	private void setImage(Image img) {
@@ -159,6 +196,8 @@ public class MonoCanvas extends JComponent {
 
 	
 	/** 
+	 * Sets background and foreground using setImage
+	 * 
 	 * @param img
 	 */
 	public void setBackground(Image img) {
@@ -168,8 +207,10 @@ public class MonoCanvas extends JComponent {
 
 	
 	/** 
+	 * Copies and returns input image as new object
+	 * 
 	 * @param img
-	 * @return BufferedImage
+	 * @return BufferedImage - copy of input image
 	 */
 	private BufferedImage copyImage(Image img) {
 		BufferedImage copyOfImage = new BufferedImage(getSize().width,
@@ -181,6 +222,9 @@ public class MonoCanvas extends JComponent {
 
 	
 	/** 
+	 * Saves object (in this case, BufferedImage) to SizedStack for 
+	 * undo and redo method purposes
+	 * 
 	 * @param img
 	 */
 	private void saveToStack(Image img) {
@@ -189,12 +233,18 @@ public class MonoCanvas extends JComponent {
 
 	
 	/** 
+	 * Sets the thickness of line drawn
+	 * 
 	 * @param thick
 	 */
 	public void setThickness(int thick) {
 		g.setStroke(new BasicStroke(thick));
 	}
 
+	/**
+	 * Meaningless class, used for debugging purposes
+	 * alongside rect()
+	 */
 	class MyMouseListener extends MouseInputAdapter
 	{
 		private Point startPoint;

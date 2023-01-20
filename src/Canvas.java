@@ -151,9 +151,11 @@ public class Canvas extends JComponent {
 	}
 
 	/**
+	 * ########
+	 * 
 	 * Color methods to set paint as desired color
 	 * 
-	 * 
+	 * ########
 	 */
 
 	public void red() {
@@ -368,6 +370,8 @@ public class Canvas extends JComponent {
 
 	
 	/** 
+	 * Sets background and foreground using setImage
+	 * 
 	 * @param img
 	 */
 	public void setBackground(BufferedImage img) {
@@ -421,7 +425,7 @@ public class Canvas extends JComponent {
 	}
 
 	/**
-	 * Meaningless class, was used for debugging purposes
+	 * Meaningless class, used for debugging purposes
 	 * alongside rect()
 	 */
 	class MyMouseListener extends MouseInputAdapter
