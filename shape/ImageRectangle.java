@@ -14,14 +14,26 @@ public class ImageRectangle extends Rectangle{
         this.rectangle = this;
     }
 
+    
+    /** 
+     * @return Rectangle
+     */
     public Rectangle getRectangle() {
         return rectangle;
     }
 
+    
+    /** 
+     * @param rectangle
+     */
     public void setRectangle(Rectangle rectangle) {
         this.rectangle = rectangle;
     }
 
+    
+    /** 
+     * @return Image
+     */
     public Image getImage() {
         return image;
     }

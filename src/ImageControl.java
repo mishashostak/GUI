@@ -145,6 +145,11 @@ public class ImageControl {
         return dst;
     }
 
+    
+    /** 
+     * @param inp
+     * @return BufferedImage
+     */
     private BufferedImage OnlyBlack(BufferedImage inp) {
         Color BLK = new Color(0,0,0);
         final int BLKRGB = BLK.getRGB();

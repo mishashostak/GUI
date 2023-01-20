@@ -22,7 +22,13 @@ import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.event.MouseInputAdapter;
 
-
+/**
+ * This class is the canvas for the Colouring class
+ * 
+ * @author Misha Shostak
+ * 
+ * @version 1/19/2023
+ */
 public class Canvas extends JComponent {
 	private int X1, Y1, X2, Y2;
 	private Graphics2D g;
@@ -33,9 +39,12 @@ public class Canvas extends JComponent {
 	private MouseMotionListener motion;
 	private MouseListener listener;
 	private FillMouseListener fml;
+	private Color chosCol = Color.BLACK;
 
 	
 	/** 
+	 * Saves desired image as a file
+	 * 
 	 * @param file
 	 */
 	public void save(File file) {
@@ -47,7 +56,9 @@ public class Canvas extends JComponent {
 
 	
 	/** 
-	 * @param file
+	 * Loads desired file as an image
+	 * 
+	 * @param file 
 	 */
 	public void load(File file) {
 		try {
@@ -61,6 +72,8 @@ public class Canvas extends JComponent {
 
 	
 	/** 
+	 * Typical paintComponent, it paints
+	 * 
 	 * @param g1
 	 */
 	protected void paintComponent(Graphics g1) {
@@ -81,12 +94,22 @@ public class Canvas extends JComponent {
 		}
 	}
 
+	/**
+     * Parameterized constructor to begin the paint program
+     * 
+     * @param img Given image to be set as background
+     * @param width 
+     * @param height
+     */
 	public Canvas(BufferedImage img, int width, int height) {
 		setSize(width,height);
 		setBackground(img);
 		defaultListener();
 	}
 
+	/**
+	 * Sets standard mouse listeners for drawing function
+	 */
 	public void defaultListener() {
 		setDoubleBuffered(false);
 		listener = new MouseAdapter() {
@@ -127,58 +150,80 @@ public class Canvas extends JComponent {
 		repaint();
 	}
 
+	/**
+	 * Color methods to set paint as desired color
+	 * 
+	 * 
+	 */
+
 	public void red() {
 		g.setPaint(Color.red);
+		setCol(Color.red);
 	}
 
 	public void black() {
 		g.setPaint(Color.black);
+		setCol(Color.black);
 	}
 
 	public void magenta() {
 		g.setPaint(Color.magenta);
+		setCol(Color.magenta);
 	}
 
 	public void green() {
 		g.setPaint(Color.green);
+		setCol(Color.green);
 	}
 
 	public void blue() {
 		g.setPaint(Color.blue);
+		setCol(Color.blue);
 	}
 
 	public void gray() {
 		g.setPaint(Color.GRAY);
+		setCol(Color.GRAY);
 	}
 
 	public void orange() {
 		g.setPaint(Color.ORANGE);
+		setCol(Color.ORANGE);
 	}
 
 	public void yellow() {
 		g.setPaint(Color.YELLOW);
+		setCol(Color.YELLOW);
 	}
 
 	public void pink() {
 		g.setPaint(Color.PINK);
+		setCol(Color.PINK);
 	}
 
 	public void cyan() {
 		g.setPaint(Color.CYAN);
+		setCol(Color.CYAN);
 	}
 
 	public void lightGray() {
 		g.setPaint(Color.lightGray);
+		setCol(Color.lightGray);
 	}
 
 	
 	/** 
-	 * @param color
+	 * @param color Chosen color from JColorChooser
 	 */
 	public void picker(Color color) {
 		g.setPaint(color);
+		setCol(color);
 	}
 
+	/**
+	 * This method removes all altered foreground,
+	 * clearing the canvas/image
+	 */
 	public void clear() {
 		if (background != null) {
 			setImage(copyImage(background));
@@ -190,6 +235,10 @@ public class Canvas extends JComponent {
 		repaint();
 	}
 
+	/**
+	 * Undo function
+	 * Uses a SizedStack
+	 */
 	public void undo() {
 		if (undoStack.size() > 0) {
 			undoTemp = (BufferedImage) undoStack.pop();
@@ -198,6 +247,10 @@ public class Canvas extends JComponent {
 		}
 	}
 
+	/**
+	 * Redo function
+	 * Uses a SizedStack
+	 */
 	public void redo() {
 		if (redoStack.size() > 0) {
 			redoTemp = (BufferedImage) redoStack.pop();
@@ -206,12 +259,18 @@ public class Canvas extends JComponent {
 		}
 	}
 
+	/**
+	 * Serves only to debug
+	 */
 	public void pencil() {
 		removeMouseListener(listener);
 		removeMouseMotionListener(motion);
 		defaultListener();
 	}
 
+	/**
+	 * Serves only to debug
+	 */
 	public void rect() {
 		removeMouseListener(listener);
 		removeMouseMotionListener(motion);
@@ -220,6 +279,13 @@ public class Canvas extends JComponent {
 		addMouseMotionListener(ml);
 	}
 
+	
+	/** 
+	 * Changes all MouseListeners to either the 
+	 * Fill feature or the drawing feature
+	 * 
+	 * @param fill
+	 */
 	public void setFill(boolean fill){
 		if (fill){
 			removeMouseListener(listener);
@@ -235,7 +301,17 @@ public class Canvas extends JComponent {
 		}
 	}
 
-	private void floodFill(BufferedImage img, Point point, Color target, Color replacement) {
+	
+	/** 
+	 * Replicates a common paint-bucket style fill function,
+	 * uses a looped LinkedList as a glorified recursive method
+	 * eliminating all non-target pixels from evaluation/change
+	 * 
+	 * @param point
+	 * @param target
+	 * @param replacement
+	 */
+	private void floodFill(Point point, Color target, Color replacement) {
         int width = img.getWidth() - 1;
         int height = img.getHeight() - 1;
         int targetRGB = target.getRGB();
@@ -259,14 +335,14 @@ public class Canvas extends JComponent {
             if (p.y > 0) queue.add( new Point(p.x, p.y - 1) );
             if (p.y +1 < height) queue.add( new Point(p.x, p.y + 1) );
         }
-		Graphics2D g2d = (Graphics2D) this.img.getGraphics();
-		g2d.setColor(replacement);
-		this.img = copyImage(img);
 		repaint();
 	}
 
 	/** 
-	 * @param img
+	 * Sets the img instance variable
+	 * Also capable of creating blank image if param is set to null
+	 * 
+	 * @param image
 	 */
 	private void setImage(BufferedImage image) {
 		if (image == null) {
@@ -301,8 +377,10 @@ public class Canvas extends JComponent {
 
 	
 	/** 
+	 * Copies and returns input image as new object
+	 * 
 	 * @param img
-	 * @return BufferedImage
+	 * @return BufferedImage - copy of input image
 	 */
 	private BufferedImage copyImage(BufferedImage img) {
 		BufferedImage copyOfImage = new BufferedImage(getSize().width,
@@ -314,6 +392,9 @@ public class Canvas extends JComponent {
 
 	
 	/** 
+	 * Saves object (in this case, BufferedImage) to SizedStack for 
+	 * undo and redo method purposes
+	 * 
 	 * @param img
 	 */
 	private void saveToStack(BufferedImage img) {
@@ -322,12 +403,27 @@ public class Canvas extends JComponent {
 
 	
 	/** 
+	 * Sets the thickness of line drawn
+	 * 
 	 * @param thick
 	 */
 	public void setThickness(int thick) {
 		g.setStroke(new BasicStroke(thick));
 	}
 
+	/** 
+	 * Set's instance variable chosCol 
+	 * 
+	 * @param col
+	 */
+	public void setCol(Color col) {
+		chosCol = col;
+	}
+
+	/**
+	 * Meaningless class, was used for debugging purposes
+	 * alongside rect()
+	 */
 	class MyMouseListener extends MouseInputAdapter
 	{
 		private Point startPoint;
@@ -351,15 +447,20 @@ public class Canvas extends JComponent {
 
 		public void mouseReleased(MouseEvent e)
 		{
-			if (shape.width != 0 || shape.height != 0)
-			{
+			//check if shape is null
+			if (shape.width != 0 || shape.height != 0) {
 				addRectangle(shape, e.getComponent().getForeground());
 			}
 
+			//return shape to null
 			shape = null;
 		}
 	}
 
+	/**
+	 * Inner class that is used as the fill functions
+	 * MouseListener and personal mousePressed() method
+	 */
 	class FillMouseListener extends MouseInputAdapter
 	{
 		private Point startPoint;
@@ -369,7 +470,8 @@ public class Canvas extends JComponent {
 			startPoint = e.getPoint();
 			g = (Graphics2D) img.getGraphics();
 
-			floodFill(copyImage(img),startPoint, Color.WHITE, (Color)g.getPaint());
+			//floodFill call
+			floodFill(startPoint, Color.WHITE, chosCol);
 		}
 	}
 }
